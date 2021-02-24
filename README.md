@@ -1,3 +1,4 @@
-# Assignment2
+# Psychiatrist Chatbot
 
-Push test for repo.
+The code uses trigger keywords with associated replies from the fictional doctor Hannibal Lecter. 
+Start the conversation by a greeting to the text channel on Discord.
