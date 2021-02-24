@@ -2,19 +2,19 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const trigger = [
     //0 Greeting 
-    ["hi", "hey", "hello","good morning","good evening", "good afternoon"],
+    ["hi", "hey", "hello","good morning","good evening", "good afternoon","hey there"],
     //1 
-    ["how are you", "how are things"],
+    ["how are you", "how are things","how's life"],
     //2
-    ["what is going on", "what is up"],
+    ["what is going on", "what is up","what's up"],
     //3
-    ["happy", "good", "well", "fantastic", "cool","haha"],
+    ["happy", "good", "well", "fantastic", "cool","haha","awesome","dope","fine","so so"],
     //4 Negative
-    ["bad", "bored", "tired", "sad", "bad", "sucks", "terrible", "not well", "like shit"],
+    ["bad", "bored", "tired", "sad", "bad", "sucks", "terrible", "not well", "like shit","disaster"],
     //5
-    ["tell me story", "tell me joke"],
+    ["tell me story", "tell me joke",],
     //6
-    ["thanks", "thank you"],
+    ["thanks", "thank you","appreciate"],
     //7
     ["bye", "good bye", "goodbye"]
     ];
@@ -40,7 +40,7 @@ const reply = [
     //5
     ["A pig without 3.14 is 9.8"],
     //6
-    ["You're welcome", "No problem"],
+    ["You're welcome", "No problem","It's my pleasure"],
     //7
     ["Goodbye", "See you later"],
     ];
