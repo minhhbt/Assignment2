@@ -2,13 +2,13 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const trigger = [
     //0 Greeting 
-    ["hi", "hey", "hello","good morning","good evening", "good afternoon"],
+    ["hi", "hey", "hello", "good morning", "good evening", "good afternoon"],
     //1 
     ["how are you", "how are things"],
     //2
     ["what is going on", "what is up"],
     //3
-    ["happy", "good", "well", "fantastic", "cool","haha"],
+    ["happy", "good", "well", "fantastic", "cool", "haha"],
     //4 Negative
     ["bad", "bored", "tired", "sad", "bad", "sucks", "terrible", "not well", "like shit"],
     //5
@@ -17,7 +17,7 @@ const trigger = [
     ["thanks", "thank you"],
     //7
     ["bye", "good bye", "goodbye"]
-    ];
+];
     
 const reply = [
     //0 
@@ -26,31 +26,36 @@ const reply = [
     [
         "Fine... how are you?",
         "Pretty well, how are you?",
-        "Fantastic, how are you?"
-      ],
+        "Fantastic, how are you?",
+        "Good, how about you?"
+    ],
     //2
     [
         "Nothing much",
-        "Exciting things!"
-      ],
+        "Exciting things!",
+        "Wonderful things are coming...Wonderful!"
+    ],
     //3
-    ["Glad to hear it"],
+    ["Glad to hear it", "That's great to hear"],
     //4
-    ["Why?", "Cheer up buddy"],
+    ["Why?", "Cheer up buddy", "What's the matter?"],
     //5
-    ["A pig without 3.14 is 9.8"],
+    ["A pig without 3.14 is 9.8", 
+     "What did the ghost say to the other ghost?...Do you believe in people?"
+    ],
     //6
-    ["You're welcome", "No problem"],
+    ["You're welcome", "No problem", "Don't mention it", "Glad I could help"],
     //7
-    ["Goodbye", "See you later"],
-    ];
+    ["Goodbye", "See you later", "See you around"],
+];
     
-    const alternative = [
+const alternative = [
       "Same",
       "Go on...",
       "Try again",
-      "I'm listening..."
-    ];
+      "I'm listening...",
+      "Type again"
+];
 
 client.on('ready', () => {
     client.guilds.cache.forEach((guild) => {
@@ -82,12 +87,12 @@ client.login(bot_secret_token)
 
 
 function compare(triggerArray, replyArray, text) {
-    let item="";
+    let item = "";
     for (let x = 0; x < triggerArray.length; x++) {
       for (let y = 0; y < replyArray.length; y++) {
         if (text.includes(triggerArray[x][y])) {
           items = replyArray[x];
-          item = item+" "+items[Math.floor(Math.random() * items.length)];
+          item = item + " " + items[Math.floor(Math.random() * items.length)];
         }
       }
     }
