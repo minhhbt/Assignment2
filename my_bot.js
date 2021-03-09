@@ -43,16 +43,15 @@ const trigger = [
     //h2
     ["appointment"],
     //h3
-    ["OCD", "depression", "anxiety", "suicide", "tired", "feeling down", "paranoid"]
+    ["OCD", "depression", "anxiety", "suicide", "tired", "feeling down", "paranoid"],
     //h4
-    ["bad", "sucks", "terrible", "not well", "like shit"]
+    ["bad", "sucks", "terrible", "not well", "like shit"],
     //h5
     ["time"],
     //h6 - is this too dark?
-    ["kill", "murder"]
+    ["kill", "murder"],
     //h7
     ["rude", "mean"]
-    
 ];
     
 const reply = [
@@ -106,16 +105,13 @@ const reply = [
     //h3
     ["I am sorry you feel that way, would you like some resources to assist you?", "I am sorry you feel that way, would you like to talk about it?"],
     //h4
-    ["Would you like to provide some more detail so I can assist you?"]
+    ["Would you like to provide some more detail so I can assist you?"],
     //h5- quote
     ["I Do Wish We Could Chat Longer, But I'm Having An Old Friend For Dinner."],
      //h6- quote
-     ["Killing Must Feel Good To God, Too. He Does It All The Time."],
+    ["Killing Must Feel Good To God, Too. He Does It All The Time."],
      //h7- quote
-     ["Whenever Feasible, One Should Always Try To Eat The Rude."]
-     
-    
-      
+    ["Whenever Feasible, One Should Always Try To Eat The Rude."]
 ];
 
 // array used in case a match isn't found in the trigger array.
