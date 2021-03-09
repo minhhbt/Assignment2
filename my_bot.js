@@ -24,6 +24,18 @@ const trigger = [
     ["thanks", "thank you", "appreciate it"],
     //7
     ["bye", "good bye", "goodbye"],
+
+    //8
+    ["OCD"],
+
+    //9
+    ["depression"],
+
+    //10
+    ["anxiety"],
+
+    //11
+    ["suicide"],
     
     //start of hannibal lecter theme
     //h1
@@ -74,6 +86,18 @@ const reply = [
     
     //7
     ["Goodbye", "See you later", "See you around"],
+
+    //8
+    ["https://www.helpguide.org/articles/anxiety/obssessive-compulsive-disorder-ocd.htm"],
+
+    //9
+    ["https://www.helpguide.org/articles/depression/coping-with-depression.htm"],
+
+    //10
+    ["https://www.helpguide.org/articles/anxiety/anxiety-disorders-and-anxiety-attacks.htm"],
+
+    //11
+    ["https://www.helpguide.org/articles/suicide-prevention/suicide-prevention.htm"],
     
     //h1
     ["Hi there, I am Dr.Hannibal Lecter. How can I help you today?"],
