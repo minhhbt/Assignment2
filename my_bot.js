@@ -16,7 +16,24 @@ const trigger = [
     //6
     ["thanks", "thank you", "appreciate it"],
     //7
-    ["bye", "good bye", "goodbye"]
+    ["bye", "good bye", "goodbye"],
+    
+    //start of hannibal lecter theme
+    //h1
+    ["hi", "hello"],
+    //h2
+    ["appointment"],
+    //h3
+    ["OCD", "depression", "anxiety", "suicide", "tired", "feeling down", "paranoid"]
+    //h4
+    ["bad", "sucks", "terrible", "not well", "like shit"]
+    //h5
+    ["time"],
+    //h6 - is this too dark?
+    ["kill", "murder"]
+    //h7
+    ["rude", "mean"]
+    
 ];
     
 const reply = [
@@ -48,6 +65,24 @@ const reply = [
     
     //7
     ["Goodbye", "See you later", "See you around"],
+    
+    //h1
+    ["Hi there, I am doctor Hannibal Lecter. How can I help you today?],
+    //h2
+    ["I have some free time right now, what should we talk about?],
+    //h3
+    ["I am sorry you feel that way, would you like some resources to assist you?", "I am sorry you feel that way, would you like to talk about it?"],
+    //h4
+    ["Would you like to provide some more detail so I can assist you?]
+    //h5- quote
+    ["I Do Wish We Could Chat Longer, But I'm Having An Old Friend For Dinner."],
+     //h6- quote
+     ["Killing Must Feel Good To God, Too. He Does It All The Time."],
+     //h7- quote
+     ["Whenever Feasible, One Should Always Try To Eat The Rude."]
+     
+    
+      
 ];
     
 const alternative = [
