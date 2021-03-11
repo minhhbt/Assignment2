@@ -1,3 +1,7 @@
+
+require('dotenv').config(); //Add environment variables
+
+const fetch=require('node-fetch'); //For fetch function to work
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var waitForResponse = false;
@@ -14,7 +18,11 @@ const triggerResponse = [
   // 0 Yes
   ["ok", "yes", "sure", "fine"],
   // 1 No
-  ["no", "not really"]
+  ["no", "not really","i do not","i dont","i don't","cancel"],
+  // 2 Choose time 1
+  ["3","thursday","first"],
+  // 3 Choose time 2
+  ["10","friday","second"]
 
 ];
 const replyDialogue = [
@@ -34,11 +42,11 @@ const replyDialogue = [
   //4
   ["Symptoms of OCD are obsessive thoughts on order, symmetry and repeatedly checking or cleaning things. A method to deal with this is to identify your triggers and anticipate them before they arrive to ease them. You can also challenge these thoughts and see if the consequences are that bad at all even if you don't follow it."],
   //5
-  ["Durings times of COVID, you can ease out the depression by sociazling every once in a while with family or friends via Facetime or chat. There are also online Discord servers or Slack groups with people who share a similar interest to keep you engaged with a community. Also make sure to do things that you enjoy doing like a sport or music hobby and sleep to stay fresh throughout the day."],
+  ["Durings times of COVID, you can ease out the depression by sociazling every once in a while with family or friends via Facetime or chat. There are also online Discord servers or Slack groups with people who share a similar interest to keep you engaged with a community. Also make sure to do things that you enjoy doing like a sport or music hobby and sleep to stay fresh throughout the day. We can help you set up an appointment. Would you like to do that?"],
   //6
   ["It's normal to feel anxious during the pandemic and you might feel better by connecting with friends and family through Facetime or chat. Also, try to give relaxation techniques a go such as meditation or a 10 minutes of mindfulness at the end of the day. If you are experience a lot of physical anxiety, then we can help you set an appointment with a doctor, would you like to do that?"],
   //7
-  ["I may not be able to understand exactly how you feel, but I care about you and our team really wants to help. You can reach out to us at 68-68-68."],
+  ["I may not be able to understand exactly how you feel, but I care about you and our team really wants to help. You can reach out to us at 68-68-68. You might also want to set up an appointment with me. Would you like to do that?"],
   
   //PROMPTS
   //8
@@ -69,7 +77,7 @@ const triggerGeneral = [
   //9
   ["appointment"],
   //10
-  ["tired", "feeling down", "paranoid"],
+  ["tired", "feeling down", "paranoid","scary"],
   //11
   ["bad", "sucks", "terrible", "not well", "like shit"],
   //12
@@ -161,8 +169,8 @@ client.on('ready', () => {
       console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`)
     })
   })
-  //var generalChannel = client.channels.cache.get("812168245129773070") // Replace with known channel ID
-  //generalChannel.send("I am a functioning bot!");
+  var generalChannel = client.channels.cache.get("812168245129773070") // Replace with known channel ID
+  generalChannel.send("This bot is NOT a real psychiatrist. Do NOT follow his advice!\nStart by typing Hello!");
 
   client.on('message', (receivedMessage) => {
     // Prevent bot from responding to its own messages
@@ -170,16 +178,18 @@ client.on('ready', () => {
       return;
     }
     receivedMessage.channel.send(output(receivedMessage.content));
+    if(!waitForResponse){
+      getGif(receivedMessage,"hannibal");
+    }
   })
 });
 
 // Get your bot's secret token from:
 // https://discordapp.com/developers/applications/
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
-bot_secret_token = "ODEyMTY4NjAwNjg0MDY4OTQ0.YC808w.d6ub-4-tm98RqnNYIR1GFgSwSGI"
 
 
-client.login(bot_secret_token);
+client.login(process.env.BOTTOKEN);
 
 // Function to check if string contains any of the elements
 function containsAny(str, substrings) {
@@ -196,11 +206,12 @@ function compare(triggerArray, replyArray, text) {
   // Check if we are waiting for a response
   if (waitForResponse) {
     switch (promptNum) {
-      case 0:
+      case 0: // WOULD YOU LIKE HELP RESOURCES
         if (containsAny(text, triggerResponse[0])) { // If yes, send one of the links for the corresponding trigger word (OCD, anxiety, depression,etc.)
           items = replyDialogue[responseNum];
           item = items[0];
           waitForResponse = false;
+          promptNum=-1;
           return item;
         } else { // If not, print the "Would you like to talk about it?" response
           items = replyDialogue[8];
@@ -208,29 +219,56 @@ function compare(triggerArray, replyArray, text) {
           promptNum = 1
           return item;
         }
-      case 1:
+      case 1:// WOULD YOU LIKE TO TALK ABOUT IT
         if (containsAny(text, triggerResponse[0])) { // If yes, send the summary about the issue
           item = replyDialogue[responseNum+4][0];
-          waitForResponse = false;
+          promptNum=2;
           return item;
-        } else { // If not, print the "Would you like to set up an appointment" response
-          // items = replyArray[14];
-          //TODO Appointment setup
+        } else if(containsAny(text, triggerResponse[1])) { // If not, print the "Would you like to set up an appointment" response
           item = "Would you like to set an appointment?";
           promptNum = 2;
           return item;
-        }
-      case 2:
-        if (containsAny(text, triggerArray[19])) { // If yes, send prompt for setting up the appointment
-          // items = replyArray[responseNum];
-          //TODO Appointment time confirmation
-          item = "Ok,what time?";
-          waitForResponse = false;
-          return item;
-        } else { // If not, print the "Would you like to talk about it?" response
-          //TODO Figure out further dialogue
+        }else{
+          waitForResponse=false;
+          promptNum=-1;
+          item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
           return item;
         }
+      case 2: // ASKING ABOUT APPOINTMENT
+        if (containsAny(text, triggerResponse[0])) { // If yes, send prompt choosing time slot for the appointment
+          item = "We have 2 time slots abvailable for this week:\n3:00 pm on Thursday or 10:00 am on Friday\nWhich one would suit you?";
+          promptNum=3;
+          return item;
+        } else if(containsAny(text, triggerResponse[1])) {
+          item="Ok, how else can I help you?"
+          waitForResponse=false;
+          promptNum=-1;
+          return item;
+        }else{
+          waitForResponse=false;
+          promptNum=-1;
+          item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
+          return item;
+        }
+      case 3:
+        let s="";
+        if (containsAny(text, triggerResponse[2])) { 
+          s="Thursday, 3:00 pm";
+        } else if (containsAny(text, triggerResponse[3])){ 
+          s="Friday, 10:00 am";
+        } else if (containsAny(text, triggerResponse[1])){
+          waitForResponse=false;
+          promptNum=-1;
+          item = "Ok, how else can I help you?";
+          return item;
+        }else{
+          item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
+          return item;
+        }
+        item="Ok, I will see you on "+s;
+        waitForResponse=false;
+        promptNum=-1;
+        return item;
     }
   }
   for (let x = 0; x < triggerArray.length; x++) {
@@ -273,5 +311,14 @@ function output(input) {
     product = alternative[Math.floor(Math.random() * alternative.length)];
   }
   return product;
+}
+
+async function getGif(msg,keywords){
+  let url = `https://api.tenor.com/v1/search?q=${keywords}&key=${process.env.TENORKEY}&contentfilter=high`;
+  let response = await fetch(url);
+  let json = await response.json();
+  const index = Math.floor(Math.random() * json.results.length);
+
+  msg.channel.send(json.results[index].url);
 }
 
