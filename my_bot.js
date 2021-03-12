@@ -1,10 +1,11 @@
 
 require('dotenv').config(); //Add environment variables
 
-const fetch=require('node-fetch'); //For fetch function to work
+const fetch = require('node-fetch'); //For fetch function to work
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var waitForResponse = false;
+var sendGif = true;
 var responseNum;
 var promptNum = -1;
 
@@ -18,11 +19,11 @@ const triggerResponse = [
   // 0 Yes
   ["ok", "yes", "sure", "fine"],
   // 1 No
-  ["no", "not really","i do not","i dont","i don't","cancel"],
+  ["no", "not really", "i do not", "i dont", "i don't", "cancel"],
   // 2 Choose time 1
-  ["3","thursday","first"],
+  ["3", "thursday", "first"],
   // 3 Choose time 2
-  ["10","friday","second"]
+  ["10", "friday", "second"]
 
 ];
 const replyDialogue = [
@@ -47,7 +48,7 @@ const replyDialogue = [
   ["It's normal to feel anxious during the pandemic and you might feel better by connecting with friends and family through Facetime or chat. Also, try to give relaxation techniques a go such as meditation or a 10 minutes of mindfulness at the end of the day. If you are experience a lot of physical anxiety, then we can help you set an appointment with a doctor, would you like to do that?"],
   //7
   ["I may not be able to understand exactly how you feel, but I care about you and our team really wants to help. You can reach out to us at 68-68-68. You might also want to set up an appointment with me. Would you like to do that?"],
-  
+
   //PROMPTS
   //8
   ["I am sorry you feel that way, would you like some resources to assist you?", "I am sorry you feel that way, would you like to talk about it?"],
@@ -77,7 +78,7 @@ const triggerGeneral = [
   //9
   ["appointment"],
   //10
-  ["tired", "feeling down", "paranoid","scary"],
+  ["tired", "feeling down", "paranoid", "scary"],
   //11
   ["bad", "sucks", "terrible", "not well", "like shit"],
   //12
@@ -87,17 +88,23 @@ const triggerGeneral = [
   //14
   ["rude", "mean"],
 
-  // HELP triggers
   //15
-  ["OCD"],
+  ["what do you do"],
 
   //16
-  ["depression", "depressed"],
+  ["contact", "reach you", "email"],
 
+  // HELP triggers
   //17
-  ["anxiety", "anxious"],
+  ["ocd"],
 
   //18
+  ["depression", "depressed"],
+
+  //19
+  ["anxiety", "anxious"],
+
+  //20
   ["suicide", "suicidal"],
 ];
 
@@ -148,6 +155,10 @@ const reply = [
   ["Killing Must Feel Good To God, Too. He Does It All The Time."],
   //14- quote
   ["Whenever Feasible, One Should Always Try To Eat The Rude."],
+  //15
+  ["I used to be a full time psychiatrist before my time in prison. By no means am I a nice person but I can do my best to give you advice."],
+  //16
+  ["You can reach me using the email hannibalglobal@gmail.com. I am available on chat 24/7 and our team can also be contacted via 338-671-003."]
 ];
 
 
@@ -169,17 +180,24 @@ client.on('ready', () => {
       console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`)
     })
   })
+  // MESSAGES ON START
   var generalChannel = client.channels.cache.get("812168245129773070") // Replace with known channel ID
-  generalChannel.send("This bot is NOT a real psychiatrist. Do NOT follow his advice!\nStart by typing Hello!");
-
+  generalChannel.send("Dear user, we might have created the creepiest bot in the history of discord. Believe us, we are equally shocked. Enjoy!");
+  generalChannel.send("Wondering who Dr. Lecter is?");
+  generalChannel.send("Dr. Hannibal Lecter is a character created by novelist Thomas Harris. Lecter is a serial killer who eats his victims. Before his capture, he was a respected forensic psychiatrist; after his incarceration, he is consulted by FBI agents Clarice Starling and Will Graham to help them find other serial killers.");
+  generalChannel.send("https://hannibal.fandom.com/wiki/Hannibal_Lecter");
+  generalChannel.send("Today you have a chance to attend Dr. Lecter's therapy session.");
+  generalChannel.send("!REMEMBER!\nThis bot is NOT a real psychiatrist. Do NOT follow his advice!");
+  generalChannel.send("Start by typing Hello!");
   client.on('message', (receivedMessage) => {
     // Prevent bot from responding to its own messages
     if (receivedMessage.author == client.user) {
       return;
     }
-    receivedMessage.channel.send(output(receivedMessage.content));
-    if(!waitForResponse){
-      getGif(receivedMessage,"hannibal");
+    var outputMessage = output(receivedMessage.content);
+    receivedMessage.channel.send(outputMessage);
+    if (!waitForResponse && sendGif) {
+      getGif(receivedMessage, "hannibal");
     }
   })
 });
@@ -211,7 +229,8 @@ function compare(triggerArray, replyArray, text) {
           items = replyDialogue[responseNum];
           item = items[0];
           waitForResponse = false;
-          promptNum=-1;
+          sendGif = false;
+          promptNum = -1;
           return item;
         } else { // If not, print the "Would you like to talk about it?" response
           items = replyDialogue[8];
@@ -221,61 +240,63 @@ function compare(triggerArray, replyArray, text) {
         }
       case 1:// WOULD YOU LIKE TO TALK ABOUT IT
         if (containsAny(text, triggerResponse[0])) { // If yes, send the summary about the issue
-          item = replyDialogue[responseNum+4][0];
-          promptNum=2;
+          item = replyDialogue[responseNum + 4][0];
+          promptNum = 2;
           return item;
-        } else if(containsAny(text, triggerResponse[1])) { // If not, print the "Would you like to set up an appointment" response
+        } else if (containsAny(text, triggerResponse[1])) { // If not, print the "Would you like to set up an appointment" response
           item = "Would you like to set an appointment?";
           promptNum = 2;
           return item;
-        }else{
-          waitForResponse=false;
-          promptNum=-1;
+        } else {
+          waitForResponse = false;
+          promptNum = -1;
           item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
           return item;
         }
       case 2: // ASKING ABOUT APPOINTMENT
         if (containsAny(text, triggerResponse[0])) { // If yes, send prompt choosing time slot for the appointment
           item = "We have 2 time slots abvailable for this week:\n3:00 pm on Thursday or 10:00 am on Friday\nWhich one would suit you?";
-          promptNum=3;
+          promptNum = 3;
           return item;
-        } else if(containsAny(text, triggerResponse[1])) {
-          item="Ok, how else can I help you?"
-          waitForResponse=false;
-          promptNum=-1;
+        } else if (containsAny(text, triggerResponse[1])) {
+          item = "Ok, how else can I help you?"
+          waitForResponse = false;
+          promptNum = -1;
           return item;
-        }else{
-          waitForResponse=false;
-          promptNum=-1;
+        } else {
+          waitForResponse = false;
+          promptNum = -1;
           item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
           return item;
         }
       case 3:
-        let s="";
-        if (containsAny(text, triggerResponse[2])) { 
-          s="Thursday, 3:00 pm";
-        } else if (containsAny(text, triggerResponse[3])){ 
-          s="Friday, 10:00 am";
-        } else if (containsAny(text, triggerResponse[1])){
-          waitForResponse=false;
-          promptNum=-1;
+        let s = "";
+        if (containsAny(text, triggerResponse[2])) {
+          s = "Thursday, 3:00 pm";
+        } else if (containsAny(text, triggerResponse[3])) {
+          s = "Friday, 10:00 am";
+        } else if (containsAny(text, triggerResponse[1])) {
+          waitForResponse = false;
+          promptNum = -1;
           item = "Ok, how else can I help you?";
           return item;
-        }else{
+        } else {
           item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
           return item;
         }
-        item="Ok, I will see you on "+s;
-        waitForResponse=false;
-        promptNum=-1;
+        item = "Ok, I will see you on " + s;
+        waitForResponse = false;
+        promptNum = -1;
         return item;
     }
   }
+
+  sendGif = true;
   for (let x = 0; x < triggerArray.length; x++) {
     for (let y = 0; y < replyArray.length; y++) {
       if (text.includes(triggerArray[x][y])) {
-        if (x >= 15 && x <= 18) { //Check if text has trigger words for OCD, anxiety,depression
-          responseNum = x-15; // Record which of the trigger words it is
+        if (x >= 17 && x <= 20) { //Check if text has trigger words for OCD, anxiety,depression
+          responseNum = x - 17; // Record which of the trigger words it is
           items = replyDialogue[8];
           item = item + " " + items[0]; // Send the prompt ("Would you like more resources?")
           waitForResponse = true; // Wait for response
@@ -313,7 +334,7 @@ function output(input) {
   return product;
 }
 
-async function getGif(msg,keywords){
+async function getGif(msg, keywords) {
   let url = `https://api.tenor.com/v1/search?q=${keywords}&key=${process.env.TENORKEY}&contentfilter=high`;
   let response = await fetch(url);
   let json = await response.json();
