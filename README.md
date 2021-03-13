@@ -1,4 +1,6 @@
-# Psychiatrist Chatbot
+# Psychiatrist Chatbot as a Client-Server Service
 
-- The code uses trigger keywords with associated replies from the fictional doctor Hannibal Lecter. </br>
-- Start the conversation by a greeting to the text channel on Discord.
+- The app employs sockets to enable communication between Client (user) and the Server (Bot).
+- The interface acting between the Client (user) and the Server (bot) is HTML.
+- Algorithms for bot's responses are similar to those used for the Discord bot.
+- Client side is frontend, while the server side is backend.
