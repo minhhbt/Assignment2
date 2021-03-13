@@ -6,11 +6,13 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 const getGif = require('./functions/getGif.js');
+const compare = require('./functions/compare.js');
 
 var waitForResponse = false;
 var sendGif = true;
-var responseNum;
-var promptNum = -1;
+var promptObj={responseNum: -1 ,promptNum: -1,waitForResponse: false};
+var responseNum=promptObj.responseNum;
+var promptNum=promptObj.promptNum;
 
 var constants = require('./constants.js');
 const triggerResponse=constants.TRIGGER_RESPONSE;
@@ -40,7 +42,7 @@ client.on('ready', () => {
   generalChannel.send("Today you have a chance to attend Dr. Lecter's therapy session.");
   generalChannel.send("!REMEMBER!\nThis bot is NOT a real psychiatrist. Do NOT follow his advice!");
   generalChannel.send("Start by typing Hello!");
-  
+
   client.on('message', (receivedMessage) => {
     // Prevent bot from responding to its own messages
     if (receivedMessage.author == client.user) {
@@ -71,97 +73,7 @@ function containsAny(str, substrings) {
   }
   return false;
 }
-function compare(triggerArray, replyArray, text) {
-  let item = "";
-  // Check if we are waiting for a response
-  if (waitForResponse) {
-    switch (promptNum) {
-      case 0: // WOULD YOU LIKE HELP RESOURCES
-        if (containsAny(text, triggerResponse[0])) { // If yes, send one of the links for the corresponding trigger word (OCD, anxiety, depression,etc.)
-          items = replyDialogue[responseNum];
-          item = items[0];
-          waitForResponse = false;
-          sendGif = false;
-          promptNum = -1;
-          return item;
-        } else { // If not, print the "Would you like to talk about it?" response
-          items = replyDialogue[8];
-          item = items[1];
-          promptNum = 1
-          return item;
-        }
-      case 1:// WOULD YOU LIKE TO TALK ABOUT IT
-        if (containsAny(text, triggerResponse[0])) { // If yes, send the summary about the issue
-          item = replyDialogue[responseNum + 4][0];
-          promptNum = 2;
-          return item;
-        } else if (containsAny(text, triggerResponse[1])) { // If not, print the "Would you like to set up an appointment" response
-          item = "Would you like to set an appointment?";
-          promptNum = 2;
-          return item;
-        } else {
-          waitForResponse = false;
-          promptNum = -1;
-          item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
-          return item;
-        }
-      case 2: // ASKING ABOUT APPOINTMENT
-        if (containsAny(text, triggerResponse[0])) { // If yes, send prompt choosing time slot for the appointment
-          item = "We have 2 time slots abvailable for this week:\n3:00 pm on Thursday or 10:00 am on Friday\nWhich one would suit you?";
-          promptNum = 3;
-          return item;
-        } else if (containsAny(text, triggerResponse[1])) {
-          item = "Ok, how else can I help you?"
-          waitForResponse = false;
-          promptNum = -1;
-          return item;
-        } else {
-          waitForResponse = false;
-          promptNum = -1;
-          item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
-          return item;
-        }
-      case 3:
-        let s = "";
-        if (containsAny(text, triggerResponse[2])) {
-          s = "Thursday, 3:00 pm";
-        } else if (containsAny(text, triggerResponse[3])) {
-          s = "Friday, 10:00 am";
-        } else if (containsAny(text, triggerResponse[1])) {
-          waitForResponse = false;
-          promptNum = -1;
-          item = "Ok, how else can I help you?";
-          return item;
-        } else {
-          item = alternative[Math.floor(Math.random() * alternative.length)]; // returns random responce
-          return item;
-        }
-        item = "Ok, I will see you on " + s;
-        waitForResponse = false;
-        promptNum = -1;
-        return item;
-    }
-  }
 
-  sendGif = true;
-  for (let x = 0; x < triggerArray.length; x++) {
-    for (let y = 0; y < replyArray.length; y++) {
-      if (text.includes(triggerArray[x][y])) {
-        if (x >= 17 && x <= 20) { //Check if text has trigger words for OCD, anxiety,depression
-          responseNum = x - 17; // Record which of the trigger words it is
-          items = replyDialogue[8];
-          item = item + " " + items[0]; // Send the prompt ("Would you like more resources?")
-          waitForResponse = true; // Wait for response
-          promptNum = 0;
-        } else {
-          items = replyArray[x];                  // returns an array of possible replies
-          item = item + " " + items[Math.floor(Math.random() * items.length)];   // generates a random reply from the array
-        }
-      }
-    }
-  }
-  return item;
-}
 function output(input) {
   let product;
   let text = input.toLowerCase().replace(/[^\w\s\d]/gi, "");
@@ -175,7 +87,10 @@ function output(input) {
   //compare arrays
   //then search keyword
   //then random alternative
-  let temp = compare(triggerGeneral, replyGeneral, text);
+  let temp = compare(triggerGeneral, replyGeneral,triggerResponse,replyDialogue,alternative, text,promptObj);
+  responseNum = promptObj.responseNum;
+  promptNum = promptObj.promptNum;
+   waitForResponse=promptObj.waitForResponse;
   if (temp) {
     product = temp;
   } else {
