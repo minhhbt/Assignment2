@@ -1,6 +1,6 @@
 # Psychiatrist Chatbot
 ## Overview
-- The code employs the Discord.js library in order to connect to a bot channel created by the members for this purpose. </br>
+- The code employs the **Discord.js** library in order to connect to a bot channel created by the members for this purpose. </br>
 - As soon as the ***my_bot.js*** file is run, the bot channel on Discord can be opened and used to interact with the bot. </br>
 - The code uses trigger keywords with associated replies from the fictional Dr.Hannibal Lecter. </br>
 - The user-defined functions do the job of converting user's messages into forms that trigger a reply from the bot. </br>
