@@ -28,7 +28,7 @@ window.onload = function(){
 
     // RESPONDING TO SERVER'S MESSAGES
     clientSocket.on('chat-message', function(data){
-        chat_body.innerHTML += '<p><strong>' + 'Dr.Lecter: ' + '</strong>' + data + '</p>';
+        chat_body.innerHTML += '<p><strong>' + 'Dr. Lecter: ' + '</strong>' + data + '</p>';
         //alert('server message: ', data.message);      // DEBUGGING
 
     });
