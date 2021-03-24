@@ -19,7 +19,7 @@ body {
 	border-radius: 15px;
 	padding: 24px;
 	margin: 64px auto;
-	box-shadow: 0 3px #ccc;
+	box-shadow: 0 1 3rem rgb(179, 177, 177);
 }
 
 .chatlogs {
@@ -99,15 +99,15 @@ body {
 } */
 
 .chat-form button {
-	background: #ccc;
 	padding: 5px 15px;
 	font-size: 14px;
 	border: none;
 	margin: 0 10px;
-	margin-top: 6px; /*Fix*/
-	border-radius: 3px;
-	box-shadow: 0 3px 0 #ccc;
+	margin-top: 8px; /*Fix*/
+	border-radius: 5px;
 	cursor: pointer;
+	background: #323ebe;
+	color: white;
 }
 
 /* .chat-form button:hover {
