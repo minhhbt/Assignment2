@@ -94,10 +94,6 @@ body {
 	color: black;
 }
 
-/* .chat-form textarea:focus {
-	background: white;
-} */
-
 .chat-form button {
 	padding: 5px 15px;
 	font-size: 14px;
@@ -109,7 +105,3 @@ body {
 	background: #323ebe;
 	color: white;
 }
-
-/* .chat-form button:hover {
-	background: black;
-} */
