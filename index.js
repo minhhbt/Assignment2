@@ -50,8 +50,6 @@ async function replyMessage(clientMessage) {
     if (entities["LOCATION"]!=null){
         serverReply=serverReply.concat("\nI have never been to "+entities["LOCATION"][0]+", have you?");
     }
-   
-
 }
 
 
