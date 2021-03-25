@@ -4,10 +4,9 @@
       "en"
     ],
     "tag": "nlp",
-    "threshold": 0.5,
-    "autoLoad": true,
-    "autoSave": true,
-    "modelFileName": "model.nlp",
+    "corpora": [
+      "./corpus.json"
+    ],
     "calculateSentiment": true
   },
   "nluManager": {

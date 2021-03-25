@@ -1,3 +1,5 @@
+const PatientMessage=require('./PatientMessage.js');
+
 var express = require('express');
 var socket = require('socket.io'); // a socket brings in message from the client.
 
@@ -34,19 +36,21 @@ serverSocket.on('connection', function (socket) {
 
 // simple function to reply to Client's message
 async function replyMessage(clientMessage) {
-    // var salutations = ['hi', 'hello', 'Hi, how can I help you today?', 'hello there', 'hey', 'hey there'];
-    // var serverReply = 'Hi there';
-    const { dockStart } = require('@nlpjs/basic');
+    
+    // var response=await defaultReply(clientMessage);
+    // console.log(getIntent(response))
+    // serverReply = String(response['answer']);
+    
+   
+    let patientMessage=new PatientMessage(clientMessage);
+    var reply=await patientMessage.getServerReply();
+    serverReply=reply;
 
-    const dock = await dockStart();
-    const nlp = dock.get('nlp');
-    await nlp.train();
-
-    var response = await nlp.process('en', clientMessage);
-    serverReply = String(response['answer']);
-    console.log(serverReply);
-
-    // return serverReply;
+    var entities=await patientMessage.getNER();
+    if (entities["LOCATION"]!=null){
+        serverReply=serverReply.concat("\nI have never been to "+entities["LOCATION"][0]+", have you?");
+    }
+   
 
 }
 
