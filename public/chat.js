@@ -40,7 +40,7 @@ window.onload = function(){
         //alert('hii');
         clientSocket.emit('chat-message', {message: message.value, handle: ''});
        
-        message = "";      // resetting message input field
+        message.value = "";      // resetting message input field
         //alert('sent');     // DEBUGING
     });
 
