@@ -50,6 +50,15 @@ async function replyMessage(clientMessage) {
     if (entities["LOCATION"]!=null){
         serverReply=serverReply.concat("\nI have never been to "+entities["LOCATION"][0]+", have you?");
     }
+    //need for test
+    return reply;
 }
 
 
+//used for testing
+exports.replyMessage=replyMessage;
+//exports.server= server;
+function handler(){
+    server.close();
+}
+exports.handler= handler;
