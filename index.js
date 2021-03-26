@@ -54,7 +54,7 @@ async function replyMessage(clientMessage) {
         serverReply=serverReply.concat("\nI have never been to "+entities["LOCATION"][0]+", have you?");
     }
     //need for test
-    return reply;
+    return serverReply;
 }
 
 
