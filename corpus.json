@@ -638,10 +638,7 @@
           "hey there"
         ],
         "answers": [
-          "Hey there!",
-          "Greetings!",
-          "Hello there",
-          "Hey!",
+          "Greetings! How can I help you?",
           "Hello, how can I help you today?"
         ]
       },
@@ -727,16 +724,12 @@
         "utterances": [
           "I'm sad",
           "I'm unhappy",
-          "I'm depressed",
           "I'm upset",
           "I'm fed up"          
         ],
         "answers": [
           "Why?", 
-          "What's the matter?", 
-          "Minor setbacks before a major comeback", 
-          "Sometimes, life gives you lemons...",
-          "I'm sorry you feel that way"
+          "What's the matter?"
         ]
       },
       {
@@ -748,10 +741,7 @@
           "I feel lonely and depressed"                    
         ],
         "answers": [
-          "Why?", 
-          "What's the matter?", 
           "I'm sorry you feel that way",
-          "During times of COVID, you can ease out the depression by socializing every once in a while with family or friends via Facetime or chat. There are also online Discord servers or Slack groups with people who share a similar interest to keep you engaged with a community. Also make sure to do things that you enjoy doing like a sport or music hobby and sleep to stay fresh throughout the day.",
           "Would you like to talk more about it?"
         ]
       },
@@ -764,11 +754,8 @@
           "I'm going through stress and anxiety"                      
         ],
         "answers": [
-          "Why?", 
-          "What's the matter?", 
           "I'm sorry you feel that way",
-          "Would you like to talk more about it?",
-          "It's normal to feel anxious during the pandemic and you might feel better by connecting with friends and family through Facetime or chat. Also, try to give relaxation techniques a go such as meditation or a 10 minutes of mindfulness at the end of the day."
+          "Would you like to talk more about it?"
         ]
       },
       {
