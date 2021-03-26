@@ -1,13 +1,12 @@
 // A class to process client message
 module.exports = class PatientMessage {
-    response;
     constructor(text) {
         this.text = text;
     }
 
     // Generates a reply based on the created corpus file
     // Uses nlpjs api
-    async defaultResponse() {
+    async getSummary() {
         const { dockStart, ConsoleConnector } = require('@nlpjs/basic');
 
         const dock = await dockStart();
@@ -16,8 +15,6 @@ module.exports = class PatientMessage {
 
         var response = await nlp.process('en', this.text);
 
-        // console.log(response);
-        this.response = response;
         return response;
     }
 
@@ -39,31 +36,4 @@ module.exports = class PatientMessage {
 
         return test(this.text);
     }
-    // Function gets intent from existing response OR g
-    async getIntent() {
-        if (this.response == null) {
-            this.response = await this.defaultResponse(this.text)
-            // console.log(this.response)
-        }
-        if (this.response != null) {
-            return this.response['intent'];
-
-        } else {
-            return null
-        }
-    }
-    async getServerReply() {
-        if (this.response == null) {
-            this.response = await this.defaultResponse(this.text)
-            console.log(this.response)
-        }
-        if (this.response != null) {
-            return this.response['answer'];
-
-        } else {
-            return null
-        }
-    }
-
-
 }

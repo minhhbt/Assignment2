@@ -1,4 +1,5 @@
 const PatientMessage=require('./PatientMessage.js');
+const Doctor=require('./Doctor.js');
 
 var express = require('express');
 var socket = require('socket.io'); // a socket brings in message from the client.
@@ -43,8 +44,10 @@ async function replyMessage(clientMessage) {
     
    
     let patientMessage=new PatientMessage(clientMessage);
-    var reply=await patientMessage.getServerReply();
-    serverReply=reply;
+    let doctor=new Doctor();
+    await doctor.setMessage(patientMessage);
+
+    serverReply=doctor.getReply();
 
     var entities=await patientMessage.getNER();
     if (entities["LOCATION"]!=null){
