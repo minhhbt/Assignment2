@@ -1,4 +1,4 @@
-const u= require('./index')
+const u= require('../index')
 //const mongoose= require('mongoose')
 //const expected= [expect.stringMatching('Greetings!'), expect.stringMatching('Hey there!')];
 test('properly returns a greeting', async () => {
