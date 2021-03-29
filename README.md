@@ -16,4 +16,8 @@ Meet **Dr. Hannibal Lecter**, the online Psychiatrist Bot.
 - The bot can identify an entity (a well known place, monument), and responds to it.
 - A diverse conversation topic includes recipes: The bot loves to cook, and can be asked about recipes.
 - The **NLP.js** module helps the bot respond to basic conversations, with senseful replies.
-- 
+
+## How to make it work
+- Run the index.js code in the terminal. This is the Server (bot) code.
+- Open the browser, and type localhost:4000.
+- Start having a conversation with Dr. Lecter!
