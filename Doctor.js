@@ -39,6 +39,7 @@ module.exports = class Doctor {
             var mentalIssuesData = require('./mentalIssuesData.json').data;
             var issue = mentalIssuesData.find(el => el.name === intent)
             console.log(issue);
+            
             return issue;
         } else {
             return null
@@ -50,6 +51,8 @@ module.exports = class Doctor {
     // Function gets reply based on the corpus file from existing response
     getReply() {
         var serverReply = new Array();
+
+        //DEBUGGGING
         console.log(this.messageSummary);
         console.log(this.messageNER);
 
@@ -69,7 +72,7 @@ module.exports = class Doctor {
             }
         } else if(!this.awaitReview){
             if(this.getIntent()=="user.yes"){
-                if(this.awaitReplyAppointment()){
+                if(this.awaitReplyAppointment){
                     
                 }else{
                     serverReply.push(this.issue.link);

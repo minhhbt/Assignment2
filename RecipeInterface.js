@@ -5,16 +5,25 @@ var API_KEY = "aad4d9f345mshbfe74e4d541f881p148a51jsn8535d35fade1";
 
 module.exports = class RecipeInterface {
 
-
-    INGREDIENT_LIST = 'beef, duck, turkey, rabbit';
+    
     recipeInfo;
     constructor() {
-        getRecipeInfo(function (error, recipeInfo) {
-            this.recipeInfo=recipeInfo;
-            console.log(this.recipeInfo());
-        });
         // console.log("CREATED");
     }
+    init(){
+        var promise = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                var INGREDIENT_LIST = 'beef, duck, turkey, rabbit';
+                getRecipeInfo(INGREDIENT_LIST,function (error, recipeInfo) {
+                    resolve(recipeInfo);
+                });
+            }, 3000);
+        });
+        this.recipeInfo=promise.then(function(data) {
+            return data;
+        });
+    }
+
 
     getRecipeTitle(){
         return this.recipeInfo.title;
@@ -62,7 +71,7 @@ function getRecipeInfo(ingredients,callback) {
 
 async function findRecipe(ingredients, callback) {
     var req = unirest("GET", "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients");
-
+    console.log(ingredients);
     req.query({
         "ingredients": ingredients,
         "number": "5",
@@ -76,11 +85,11 @@ async function findRecipe(ingredients, callback) {
     });
 
 
-    req.end(async function (res) {
+    req.end(function (res) {
         if (res.error) throw new Error(res.error);
         //TRY CATCH
         var data = JSON.parse(JSON.stringify(res.body));
-        console.log(data);
+
         var idx = Math.floor(Math.random() * data.length);
 
         var id = data[idx]['id'];
