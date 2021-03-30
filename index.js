@@ -66,15 +66,16 @@ async function replyMessage(doctor, serverSocket) {
     serverReply = doctor.getReply();
 
     //TESTING NER
-    var entities = await patientMessage.getNER();
-    console.log(entities);
+    var entities = doctor.messageNER;
+
     if (entities["LOCATION"] != null) {
-        serverReply = serverReply.push("I have never been to " + entities["LOCATION"][0] + ", have you?");
+        var location=entities["LOCATION"][0];
+        serverReply.push("I have never been to " + location + ", have you?");
     }
     
-    if (serverReply.length==0){
-        serverReply.push(":)");
-    }
+    // if (serverReply.length==0 || serverReply[0]==""){
+    //     serverReply.push(":)");
+    // }
     for (var i = 0; i < serverReply.length; i++) {
         serverSocket.emit('chat-message', serverReply[i]);
     }

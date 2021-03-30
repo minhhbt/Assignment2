@@ -52,7 +52,7 @@ module.exports = class Doctor {
         let intent = this.getIntent();
         if (this.mentalIssues.includes(intent)) {
 
-            var mentalIssuesData = require('./mentalIssuesData.json').data;
+            var mentalIssuesData = require('./data/mentalIssuesData.json').data;
             var issue = mentalIssuesData.find(el => el.name === intent)
             console.log(issue);
 

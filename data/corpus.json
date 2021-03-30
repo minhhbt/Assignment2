@@ -18,10 +18,6 @@
       ],
       "answers": [
         "I am Dr. Hannibal Lecter",
-        "Think of me as a virtual agent",
-        "Well, I'm not a person, I'm a virtual agent, and yet a perfect reincarnation of the well known Dr. Hannibal Lecter.",
-        "I'm a virtual Psychiatrist",
-        "I'm a Psychiatrist bot. You may call me Dr. Lecter.",
         "I am the famous...or the infamous Dr. Hannibal Lecter"
       ]
     },
@@ -168,7 +164,6 @@
       ],
       "answers": [
         "I'll certainly try my best",
-        "Never too busy for you. Shall we chat?",
         "Sure. I'd be happy to. What's up?",
         "I'm glad to help. What can I do for you?"
       ]
