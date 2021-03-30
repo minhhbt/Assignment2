@@ -177,13 +177,14 @@ module.exports = class Doctor {
         if (sentiment.compound >= 0.5) {
             r=1;
             reply="I'm glad I could help";
-        }else if (sentiment.appointment<=-0.5){
+        }else if (sentiment.compound<=(-0.5)){
             r=-1;
             reply="Sorry. I will try to improve in the future";
         }else{
             r=0;
             reply="Ok, thank you";
         }
+        console.log("SENTIMENT:"+this.patientMessage.getSentiment());
 
         if (this.awaitReview && this.inProgress) {
             this.serverReply.push(reply);
