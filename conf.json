@@ -1,7 +1,7 @@
 {
     "settings": {
       "nlp": {
-        "corpora": ["./corpus.json"]
+        "corpora": ["./data/corpus.json"]
       },
       "api-server": {
         "port": 3000,
