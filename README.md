@@ -1,6 +1,8 @@
 # Psychiatrist Chatbot as a Client-Server Service
 
 Meet **Dr. Hannibal Lecter**, the online Psychiatrist Bot.
+The bot is loosely based on the titular main antagonist of the Hannibal book series by Thomas Harris and their film and television series adaptions.
+Hannibal is an extremely brilliant psychiatrist, but also a mentally disturbed and cannibalistic serial killer infamous for eating his victims.
 
 ## Overview
 - The app employs sockets to enable communication between Client (user) and the Server (Bot).
@@ -25,4 +27,10 @@ Meet **Dr. Hannibal Lecter**, the online Psychiatrist Bot.
 ## How to run the tests
 - npm install -g jest
 - npm test 
+
+## Libraries and APIs used:
+nlpjs api - understanding synonyms, getting the message intent
+ner-promise api & Stanford NER library - Named Entity Recognition
+vader-sentiment package - sentiment analysis
+unirest & Spoonacular API - accessing the database of Recipes & Wine recommendations
 
