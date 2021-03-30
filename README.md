@@ -21,3 +21,7 @@ Meet **Dr. Hannibal Lecter**, the online Psychiatrist Bot.
 - Run the index.js code in the terminal. This is the Server (bot) code.
 - Open the browser, and type localhost:4000.
 - Start having a conversation with Dr. Lecter!
+
+## How to run the tests
+- npm install -g jest
+- npm test (Run in the Assignment2 repo)
