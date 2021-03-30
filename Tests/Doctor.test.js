@@ -28,5 +28,5 @@ test('properly returns an issue',  async () => {
     var doc= new d();
     await doc.setMessage(new p('I\'m back'));
     //can i match to object instead of string?
-    expect(doc.getReply()).toMatch('Welcome back. What can I do for you?');
+    expect(doc.getReply()).toMatch(/(Welcome back. What can I do for you?|Good to have you here. What can I do for you?)/i);
 })
