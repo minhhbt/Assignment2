@@ -24,4 +24,4 @@ Meet **Dr. Hannibal Lecter**, the online Psychiatrist Bot.
 
 ## How to run the tests
 - npm install -g jest
-- npm test (Run in the Assignment2 repo)
+- npm test 
