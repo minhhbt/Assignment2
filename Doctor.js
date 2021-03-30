@@ -1,5 +1,7 @@
 // A class to process client message
 const PatientMessage = require('./PatientMessage.js');
+
+
 module.exports = class Doctor {
 
     patientMessage;
@@ -7,12 +9,17 @@ module.exports = class Doctor {
     messageNER;
     issue;
     appointment;
+    serverReply;
+    recipeInfo;
+    wineInfo;
 
+    //DATA FLOW VARIABLES
     inProgress = false;
-    awaitReplyResources=false;
-    awaitReplyAppointment=false;
-    awaitReview=false;
-
+    awaitReplyResources = false;
+    awaitReplyAppointment = false;
+    awaitReview = false;
+    awaitReplyRecipe = false;
+    awaitReplyWine = false;
 
 
 
@@ -24,6 +31,15 @@ module.exports = class Doctor {
         this.patientMessage = patientMessage;
         await this.setMessageAttributes();
     }
+
+    setRecipeInfo(recipeInfo) {
+        this.recipeInfo = recipeInfo.recipes[0];
+    }
+    setWineInfo(wineInfo) {
+        this.wineInfo = wineInfo;
+        console.log(this.wineInfo);
+    }
+
 
     async setMessageAttributes() {
         this.messageSummary = await this.patientMessage.getSummary();
@@ -39,7 +55,7 @@ module.exports = class Doctor {
             var mentalIssuesData = require('./mentalIssuesData.json').data;
             var issue = mentalIssuesData.find(el => el.name === intent)
             console.log(issue);
-            
+
             return issue;
         } else {
             return null
@@ -50,7 +66,7 @@ module.exports = class Doctor {
 
     // Function gets reply based on the corpus file from existing response
     getReply() {
-        var serverReply = new Array();
+        this.serverReply = new Array();
 
         //DEBUGGGING
         console.log(this.messageSummary);
@@ -61,32 +77,79 @@ module.exports = class Doctor {
                 this.issue = this.getIssue();
                 if (this.issue != null) {
                     this.inProgress = true;
-                    serverReply.push(this.issue.summary);
-                    serverReply.push("Would you like some more resources to help you cope?");
+                    this.awaitReplyResources = true;
+                    this.serverReply.push(this.issue.summary);
+                    this.serverReply.push("Would you like some more resources to help you cope?");
 
+                } else if (this.getIntent() == "user.food") {
+                    this.inProgress = true;
+                    this.awaitReplyRecipe = true;
+                    this.serverReply.push("Are you hungry?");
+                } else if (this.getIntent() == "user.wine") {
+                    this.serverReply.push(this.messageSummary['answer']);
+                    this.inProgress = true;
+                    this.awaitReplyWine = true;
                 } else {
-                    serverReply.push(this.messageSummary['answer']);
+                    this.serverReply.push(this.messageSummary['answer']);
                 }
 
             } else {
+                console.lot("Message attributes have not been set up");
             }
-        } else if(!this.awaitReview){
-            if(this.getIntent()=="user.yes"){
-                if(this.awaitReplyAppointment){
-                    
-                }else{
-                    serverReply.push(this.issue.link);
-                }
-                this.inProgress=false;
-            }else if (this.getIntent()=="user.no"){
-                serverReply.push("Would you like to set up an appointment then?");
-            }else{
-                serverReply.push(this.messageSummary['answer']);
-                this.inProgress=false;
+        } else if (this.awaitReplyResources) { // dialogue on topic started
+            if (this.getIntent() == "user.yes") {
+                this.serverReply.push(this.issue.link);
+            } else if (this.getIntent() == "user.no") {
+                this.serverReply.push("Ok");
+            } else {
+                this.serverReply.push(this.messageSummary['answer']);
+                this.inProgress = false; // continue conversation, terminate dialogue on topic
             }
+            this.serverReply.push("Would you like to set up an appointment?");
+            this.awaitReplyAppointment = true;
+            this.awaitReplyResources = false;
 
+        } else if (this.awaitReplyAppointment) {
+            if (this.getIntent() == "user.yes") {
+                //TODO: SETTING UP APPOINTMENT WITH NER
+                this.serverReply.push("Appointment set up!");
+            } else if (this.getIntent() == "user.no") {
+                this.serverReply.push("Ok");
+            } else {
+                this.serverReply.push(this.messageSummary['answer']); // continue conversation, terminate dialogue on topic
+            }
+            this.awaitReplyAppointment = false;
+            this.inProgress = false;
+        } else if (this.awaitReplyRecipe) {
+            if (this.getIntent() == "user.yes") {
+                this.serverReply.push("Before we begin, I must warn you...nothing here is vegetarian");
+                if (this.getRecipeSummary() != null)
+                    this.serverReply.push(this.getRecipeSummary());
+                if (this.getRecipeLink() != null)
+                    this.serverReply.push(this.getRecipeLink());
+            } else if (this.getIntent() == "user.no") {
+                this.serverReply.push("Ok");
+            } else {
+                this.serverReply.push(this.messageSummary['answer']); // continue conversation, terminate dialogue on topic
+                this.inProgress = false;
+            }
+            this.serverReply.push("Would you like some wine recommendations from me?");
+            this.awaitReplyRecipe = false;
+            this.awaitReplyWine = true;
+        } else if (this.awaitReplyWine) {
+            if (this.getIntent() == "user.yes") {
+                this.serverReply.push(this.getWineSummary());
+                this.serverReply.push(this.getWineProduct());
+                this.serverReply.push(this.getWineProductUrl());
+            } else if (this.getIntent() == "user.no") {
+                this.serverReply.push("Ok");
+            } else {
+                this.serverReply.push(this.messageSummary['answer']);
+            }
+            this.awaitReplyWine = false;
+            this.inProgress = false;
         }
-        return serverReply;
+        return this.serverReply;
     }
 
 
@@ -110,5 +173,29 @@ module.exports = class Doctor {
             return null
         }
     }
+
+    getAppointment() {
+        return this.appointment;
+    }
+
+    getRecipeSummary() {
+        return this.recipeInfo.summary;
+    }
+    getRecipeLink() {
+        return this.recipeInfo.sourceUrl;
+    }
+    getRecipeImage() {
+        return this.recipeInfo.image;
+    }
+    getWineSummary() {
+        return this.wineInfo.pairingText;
+    }
+    getWineProduct() {
+        return this.wineInfo.productMatches[0].description;
+    }
+    getWineProductUrl() {
+        return this.wineInfo.productMatches[0].link;
+    }
+
 
 }

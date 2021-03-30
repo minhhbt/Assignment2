@@ -1,5 +1,6 @@
 // A class to process client message
 module.exports = class PatientMessage {
+    text;
     constructor(text) {
         this.text = text;
     }

@@ -1,7 +1,13 @@
 const PatientMessage = require('./PatientMessage.js');
 const Doctor = require('./Doctor.js');
+const unirest = require('unirest');
+var API_KEY = "aad4d9f345mshbfe74e4d541f881p148a51jsn8535d35fade1";
+
 var replyFunction = replyMessage;
-var doctor=new Doctor();
+
+
+var doctor = new Doctor();
+
 
 
 var express = require('express');
@@ -22,18 +28,31 @@ var serverSocket = socket(server);
 var serverReply = null;
 // setup event listener after connection to ther Server has been made
 // the "on" method is like the "addEventListener" function for sockets.
-serverSocket.on('connection', function (socket) {
+serverSocket.on('connection', async function (socket) {
+
     console.log('Connection established...');
+    // only one possible response for wines
+    let wineInfo=await findWineRecommendations();
+    doctor.setWineInfo(wineInfo);
     // respond to Client's message. We've named this event as "chat-message".
     socket.on('chat-message', onMessage);
 });
 
-function onMessage(data){
+function onMessage(data) {
     const setReply = async () => {
+
         let patientMessage = new PatientMessage(data.message);
         await doctor.setMessage(patientMessage);
+        if (doctor.getIntent() == "user.food") {
+            let recipeInfo = await findRecipe();
+            doctor.setRecipeInfo(recipeInfo);
 
-        await replyFunction(doctor,serverSocket); //  get a reply message to send to the client
+            let wineInfo=await findWineRecommendations();
+            doctor.setWineInfo(wineInfo);
+
+        }
+
+        await replyFunction(doctor, serverSocket); //  get a reply message to send to the client
         // serverSocket.emit('chat-message', serverReply);
         console.log('Client message: ', data.message);
         console.log('Server reply: ', serverReply);
@@ -42,22 +61,25 @@ function onMessage(data){
 }
 
 // simple function to reply to Client's message
-async function replyMessage(doctor,serverSocket) {
-
-    // var response=await defaultReply(clientMessage);
-    // console.log(getIntent(response))
-    // serverReply = String(response['answer']);
+async function replyMessage(doctor, serverSocket) {
 
     serverReply = doctor.getReply();
 
-    // var entities = await patientMessage.getNER();
-    // if (entities["LOCATION"] != null) {
-    //     serverReply = serverReply.concat("\nI have never been to " + entities["LOCATION"][0] + ", have you?");
-    // }
-    //need for test
-    for(var i=0;i<serverReply.length;i++){
+    //TESTING NER
+    var entities = await patientMessage.getNER();
+    console.log(entities);
+    if (entities["LOCATION"] != null) {
+        serverReply = serverReply.push("I have never been to " + entities["LOCATION"][0] + ", have you?");
+    }
+    
+    if (serverReply.length==0){
+        serverReply.push(":)");
+    }
+    for (var i = 0; i < serverReply.length; i++) {
         serverSocket.emit('chat-message', serverReply[i]);
     }
+
+
     return serverReply;
 }
 
@@ -69,3 +91,54 @@ function handler() {
     server.close();
 }
 exports.handler = handler;
+
+
+
+
+function findRecipe() {
+    var req = unirest("GET", "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random");
+
+    req.query({
+        "number": "1",
+        "tags": "meat"
+    });
+
+    req.headers({
+        "x-rapidapi-key": "aad4d9f345mshbfe74e4d541f881p148a51jsn8535d35fade1",
+        "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "useQueryString": true
+    });
+
+
+    return new Promise((resolve, reject) => {
+        req.end(function (res) {
+            if (res.error) throw new Error(res.error);
+            return resolve(res.body);
+
+        });
+    });
+}
+
+function findWineRecommendations() {
+    var req = unirest("GET", "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/wine/pairing");
+
+
+    req.query({
+        "food": "steak",
+        "maxPrice": "50"
+    });
+
+    req.headers({
+        "x-rapidapi-key": API_KEY,
+        "x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+        "useQueryString": true
+    });
+
+
+    return new Promise((resolve, reject) => {
+        req.end(function (res) {
+            if (res.error) throw new Error(res.error);
+            return resolve(res.body);
+        });
+    });
+}

@@ -919,5 +919,32 @@
         "Ok"
       ]
     }
+    ,
+    {
+      "intent": "user.food",
+      "utterances": [
+        "Can you recommend a recipe?",
+        "I would like some food",
+        "I am hungry",
+        "migth be hungry",
+        "I want to eat",
+        "would you like to eat something",
+        "look very hungry"
+      ],
+      "answers": [
+        "Before we begin, I must warn you... nothing here is vegetarian."
+      ]
+    },
+    {
+      "intent": "user.wine",
+      "utterances": [
+        "Could you ecommend some wine?",
+        "I would like some wine",
+        "Give me wine recommendations"
+      ],
+      "answers": [
+        "Would you like some wine recommendations?"
+      ]
+    }
   ]
 }
