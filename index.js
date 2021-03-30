@@ -72,6 +72,10 @@ async function replyMessage(doctor, serverSocket) {
         var location=entities["LOCATION"][0];
         serverReply.push("I have never been to " + location + ", have you?");
     }
+    if (entities["PERSON"]!=null){
+        var person=entities["PERSON"][0];
+        serverReply.push("Ah, "+person+" is an interesting character... You know them?");
+    }
     
     // if (serverReply.length==0 || serverReply[0]==""){
     //     serverReply.push(":)");
@@ -79,7 +83,6 @@ async function replyMessage(doctor, serverSocket) {
     for (var i = 0; i < serverReply.length; i++) {
         serverSocket.emit('chat-message', serverReply[i]);
     }
-
 
     return serverReply;
 }

@@ -13,8 +13,8 @@ Meet **Dr. Hannibal Lecter**, the online Psychiatrist Bot.
 ## Functionalities
 - The bot can respond to basic messages like greetings and salutations.
 - It also advises to mental health issues reported by the user, and provides helpful reosurces.
-- The bot can identify an entity (a well known place, monument), and responds to it.
-- A diverse conversation topic includes recipes: The bot loves to cook, and can be asked about recipes.
+- The bot can identify an entity (a well known place, person), and responds to it.
+- A diverse conversation topic includes recipes & wine recommendations: The bot loves to cook, and can be asked about recipes. The bot can also make wine recommendations.
 - The **NLP.js** module helps the bot respond to basic conversations, with senseful replies.
 
 ## How to make it work
@@ -25,3 +25,4 @@ Meet **Dr. Hannibal Lecter**, the online Psychiatrist Bot.
 ## How to run the tests
 - npm install -g jest
 - npm test 
+

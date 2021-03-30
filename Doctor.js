@@ -119,7 +119,8 @@ module.exports = class Doctor {
                 this.serverReply.push(this.messageSummary['answer']); // continue conversation, terminate dialogue on topic
             }
             this.awaitReplyAppointment = false;
-            this.inProgress = false;
+            this.awaitReview=true;
+            this.serverReply.push("How did you like this interaction?");
         } else if (this.awaitReplyRecipe) {
             if (this.getIntent() == "user.yes") {
                 this.serverReply.push("Before we begin, I must warn you...nothing here is vegetarian");
@@ -145,9 +146,13 @@ module.exports = class Doctor {
                 this.serverReply.push("Ok");
             } else {
                 this.serverReply.push(this.messageSummary['answer']);
+                this.inProgress=false;
             }
             this.awaitReplyWine = false;
-            this.inProgress = false;
+            this.awaitReview=true;
+            this.serverReply.push("How did you like this interaction?");
+        }else if(this.awaitReview){
+            this.analyzeSentiment();
         }
         return this.serverReply;
     }
@@ -164,7 +169,30 @@ module.exports = class Doctor {
         }
     }
 
-    // Function gets intent from existing response
+    // Get sentiment from response
+    analyzeSentiment() {
+        var r;
+        var reply;
+        var sentiment = this.patientMessage.getSentiment();
+        if (sentiment.compound >= 0.5) {
+            r=1;
+            reply="I'm glad I could help";
+        }else if (sentiment.appointment<=-0.5){
+            r=-1;
+            reply="Sorry. I will try to improve in the future";
+        }else{
+            r=0;
+            reply="Ok, thank you";
+        }
+
+        if (this.awaitReview && this.inProgress) {
+            this.serverReply.push(reply);
+            this.serverReply.push("What else can I help you with?")
+            this.awaitReview=false;
+            this.inProgress=false;
+        }
+        return r;
+    }
 
     getMessageNER() {
         if (this.messageNER != null) {

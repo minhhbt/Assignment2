@@ -37,4 +37,10 @@ module.exports = class PatientMessage {
 
         return test(this.text);
     }
+
+    getSentiment() {
+        const vader = require('vader-sentiment');
+        const intensity = vader.SentimentIntensityAnalyzer.polarity_scores(this.text);
+        return intensity;
+    }
 }
