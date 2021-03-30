@@ -14,25 +14,7 @@ window.onload = function(){
 
     // Adding event to send message
     send_button.addEventListener('click', function(){
-        // creating div element to contain user image and user message
-        var user_chat = document.createElement('div');
-        user_chat.classList.add('chat');
-        user_chat.classList.add('self');
-        // creating div element to contain user image
-        var user_img_div = document.createElement('div');
-        user_img_div.classList.add('user-photo');
-        var user_image = document.createElement('img');
-        user_image.src = 'images/user-small.png';
-        user_img_div.appendChild(user_image);
-        // creating element for user message
-        var user_message = document.createElement('p');
-        user_message.classList.add('chat-message');
-
-        // displaying user's message
-        user_message.innerHTML = message.value;
-        user_chat.appendChild(user_img_div);
-        user_chat.appendChild(user_message);
-        chat_body.appendChild(user_chat);       
+        createChatElement('user', message.value);
 
         // emit method takes two parameters: event name, and data to be sent
          /* the name chat-message is user-defined and is implemented 
@@ -46,30 +28,48 @@ window.onload = function(){
 
     // RESPONDING TO SERVER'S MESSAGES
     clientSocket.on('chat-message', function(data){
-        // creating message elements for bot message (similar to user message)
-         // creating div element to contain bot image and bot message
-         var bot_chat = document.createElement('div');
-         bot_chat.classList.add('chat');
-         bot_chat.classList.add('friend');
-         // creating div element to contain bot image
-         var bot_img_div = document.createElement('div');
-         bot_img_div.classList.add('user-photo');
-         var bot_image = document.createElement('img');
-         bot_image.src = 'images/drlecter-small.png';
-         bot_img_div.appendChild(bot_image);
-         // creating element for bot message
-         var bot_message = document.createElement('p');
-         bot_message.classList.add('chat-message');
- 
-         // displaying bot's message
-         bot_message.innerHTML = data;
-         bot_chat.appendChild(bot_img_div);
-         bot_chat.appendChild(bot_message);
-         chat_body.appendChild(bot_chat);
- 
+         createChatElement('bot', data);
         //alert('server message: ', data.message);      // DEBUGGING
-
     });
+
+}
+
+// function to create user/bot chat elements and display them
+function createChatElement(userType, message){
+     // creating references to DOM elements
+     var chat_body = document.getElementById('chat-body');
+     // creating div element to contain user and message
+     var chat_div = document.createElement('div');
+     // creating div element to contain image
+     var img_div = document.createElement('div');
+     var profile_image = document.createElement('img');
+     // creating element for message
+     var message_element = document.createElement('p');
+
+    if(userType.localeCompare('user') == 0){   // if the type is client/user
+        // add appropriate classes to display user image and message  
+        chat_div.classList.add('chat');
+        chat_div.classList.add('self');       
+        img_div.classList.add('user-photo');          
+        profile_image.src = 'images/user-small.png';
+        img_div.appendChild(profile_image);        
+        message_element.classList.add('chat-message');        
+    }
+    else{              // the type is bot
+        // add appropriate classes to display bot image and message  
+        chat_div.classList.add('chat');
+        chat_div.classList.add('friend');     
+        img_div.classList.add('user-photo');     
+        profile_image.src = 'images/drlecter-small.png';
+        img_div.appendChild(profile_image);    
+        message_element.classList.add('chat-message');
+    }
+
+    // displaying user's message
+    message_element.innerHTML = message;
+    chat_div.appendChild(img_div);
+    chat_div.appendChild(message_element);
+    chat_body.appendChild(chat_div); 
 
 }
 
