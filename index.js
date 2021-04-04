@@ -97,8 +97,6 @@ function handler() {
 exports.handler = handler;
 
 
-
-
 function findRecipe() {
     var req = unirest("GET", "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random");
 
