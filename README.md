@@ -12,3 +12,5 @@
 - If a user is going through a condition, the bot replies with an option to provide with online resources that could be referred to. </br>
 - The bot also gives some words of advice to the user. </br>
 - The bot also prompts the user to book an appointment if needed, and sets one if there is a time slot available. </br>
+
+## Fork Test
