@@ -9,6 +9,7 @@
   "author": "me",
   "license": "ISC",
   "dependencies": {
+    "@iamtraction/google-translate": "^1.1.2",
     "@nlpjs/basic": "^4.21.3",
     "@nlpjs/directline-connector": "^4.21.1",
     "@nlpjs/express-api-server": "^4.21.1",

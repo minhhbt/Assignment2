@@ -32,8 +32,8 @@ serverSocket.on('connection', async function (socket) {
 
     console.log('Connection established...');
     // only one possible response for wines
-    let wineInfo=await findWineRecommendations();
-    doctor.setWineInfo(wineInfo);
+    // let wineInfo=await findWineRecommendations();
+    // doctor.setWineInfo(wineInfo);
     // respond to Client's message. We've named this event as "chat-message".
     socket.on('chat-message', onMessage);
 });
