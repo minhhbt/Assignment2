@@ -12,6 +12,7 @@ var doctor = new Doctor();
 
 var express = require('express');
 var socket = require('socket.io'); // a socket brings in message from the client.
+const { ConsoleConnector } = require('@nlpjs/console-connector');
 
 // App setup
 var app = express();
@@ -32,8 +33,10 @@ serverSocket.on('connection', async function (socket) {
 
     console.log('Connection established...');
     // only one possible response for wines
+
     // let wineInfo=await findWineRecommendations();
     // doctor.setWineInfo(wineInfo);
+    
     // respond to Client's message. We've named this event as "chat-message".
     socket.on('chat-message', onMessage);
 });
@@ -80,10 +83,18 @@ async function replyMessage(doctor, serverSocket) {
     // if (serverReply.length==0 || serverReply[0]==""){
     //     serverReply.push(":)");
     // }
-    for (var i = 0; i < serverReply.length; i++) {
-        serverSocket.emit('chat-message', serverReply[i]);
-    }
 
+    const translate = require('@iamtraction/google-translate');
+
+    for (var i = 0; i < serverReply.length; i++) {
+        translate(serverReply[i], { to: 'fr' }).then(res => {
+            serverReply[i] = res.text; 
+            serverSocket.emit('chat-message', serverReply[i]);
+        }).catch(err => {
+            console.error(err);
+           });
+        console.log(serverReply[i]);
+    }
     return serverReply;
 }
 
@@ -144,3 +155,4 @@ function findWineRecommendations() {
         });
     });
 }
+

@@ -1,7 +1,17 @@
-const translate = require('@iamtraction/google-translate');
+// const translate = require('@iamtraction/google-translate');
 
-translate('Tu es incroyable!', { to: 'en' }).then(res => {
-    console.log(res.text); // OUTPUT: You are amazing!
-  }).catch(err => {
-    console.error(err);
-  });
+// myText = "Amigo";
+
+// translate(myText, { to: 'fr' }).then(res => {
+//   myText = res.text;
+//   return console.log(myText); 
+// }).catch(err => {
+//   console.error(err);
+// });
+
+// translate('You are terrible!', { to: 'fr' }).then(res => {
+//     console.log(res.text); // OUTPUT: You are amazing!
+//   }).catch(err => {
+//     console.error(err);
+//   });
+
