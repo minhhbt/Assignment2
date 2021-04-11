@@ -5,10 +5,7 @@ var API_KEY = "aad4d9f345mshbfe74e4d541f881p148a51jsn8535d35fade1";
 
 var replyFunction = replyMessage;
 
-
 var doctor = new Doctor();
-
-
 
 var express = require('express');
 var socket = require('socket.io'); // a socket brings in message from the client.
@@ -90,10 +87,10 @@ async function replyMessage(doctor, serverSocket) {
         translate(serverReply[i], { to: 'fr' }).then(res => {
             serverReply[i] = res.text; 
             serverSocket.emit('chat-message', serverReply[i]);
+            console.log("Translated reply: " + serverReply[i]);
         }).catch(err => {
             console.error(err);
-           });
-        console.log(serverReply[i]);
+           });   
     }
     return serverReply;
 }

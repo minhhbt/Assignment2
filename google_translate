@@ -2,16 +2,17 @@
 
 // myText = "Amigo";
 
-// translate(myText, { to: 'fr' }).then(res => {
-//   myText = res.text;
-//   return console.log(myText); 
-// }).catch(err => {
-//   console.error(err);
-// });
+translate('You are terrible!', { to: 'fr' }).then(res => {
+    console.log(res.text); // OUTPUT: You are amazing!
+  }).catch(err => {
+    console.error(err);
+  });
 
-// translate('You are terrible!', { to: 'fr' }).then(res => {
-//     console.log(res.text); // OUTPUT: You are amazing!
-//   }).catch(err => {
-//     console.error(err);
-//   });
+  translate(serverReply[i], { to: 'fr' }).then(res => {
+    serverReply[i] = res.text; 
+    serverSocket.emit('chat-message', serverReply[i]);
+    console.log("Translated reply: " + serverReply[i]);
+}).catch(err => {
+    console.error(err);
+   }); 
 
