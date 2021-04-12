@@ -39,25 +39,33 @@ serverSocket.on('connection', async function (socket) {
 });
 
 function onMessage(data) {
-    const setReply = async () => {
 
-        let patientMessage = new PatientMessage(data.message);
-        await doctor.setMessage(patientMessage);
-        if (doctor.getIntent() == "user.food") {
-            let recipeInfo = await findRecipe();
-            doctor.setRecipeInfo(recipeInfo);
+    const translate = require('@iamtraction/google-translate');
+    translate(data.message, { to: 'en' }).then(res => {
+        data.message = res.text; 
+        console.log("Translated input: " + data.message);
+        const setReply = async () => {
 
-            let wineInfo=await findWineRecommendations();
-            doctor.setWineInfo(wineInfo);
-
+            let patientMessage = new PatientMessage(data.message);
+            await doctor.setMessage(patientMessage);
+            if (doctor.getIntent() == "user.food") {
+                let recipeInfo = await findRecipe();
+                doctor.setRecipeInfo(recipeInfo);
+    
+                let wineInfo=await findWineRecommendations();
+                doctor.setWineInfo(wineInfo);
+    
+            }
+    
+            await replyFunction(doctor, serverSocket); //  get a reply message to send to the client
+            // serverSocket.emit('chat-message', serverReply);
+            console.log('Client message: ', data.message);
+            console.log('Server reply: ', serverReply);
         }
-
-        await replyFunction(doctor, serverSocket); //  get a reply message to send to the client
-        // serverSocket.emit('chat-message', serverReply);
-        console.log('Client message: ', data.message);
-        console.log('Server reply: ', serverReply);
-    }
-    setReply();
+        setReply();
+        }).catch(err => {
+        console.error(err);
+        }); 
 }
 
 // simple function to reply to Client's message

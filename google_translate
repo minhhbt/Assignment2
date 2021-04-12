@@ -16,3 +16,9 @@ translate('You are terrible!', { to: 'fr' }).then(res => {
     console.error(err);
    }); 
 
+   translate(message.value, { to: 'en' }).then(res => {
+    message.value = res.text; 
+    console.log("Translated input: " + message.value);
+}).catch(err => {
+    console.error(err);
+   }); 
