@@ -1,13 +1,21 @@
-// const translate = require('@iamtraction/google-translate');
+const translate = require('@iamtraction/google-translate');
 
-// myText = "Amigo";
-
+// SAMPLE CODE
 translate('You are terrible!', { to: 'fr' }).then(res => {
     console.log(res.text); // OUTPUT: You are amazing!
   }).catch(err => {
     console.error(err);
   });
 
+// TRANSLATE USER INPUTS
+translate(data.message, { to: 'en' }).then(res => {
+  data.message = res.text; 
+  console.log("Translated input: " + data.message);
+  }).catch(err => {
+  console.error(err);
+  }); 
+
+// TRANSLATE SERVER REPLIES
   translate(serverReply[i], { to: 'fr' }).then(res => {
     serverReply[i] = res.text; 
     serverSocket.emit('chat-message', serverReply[i]);
@@ -16,9 +24,4 @@ translate('You are terrible!', { to: 'fr' }).then(res => {
     console.error(err);
    }); 
 
-   translate(data.message, { to: 'en' }).then(res => {
-    data.message = res.text; 
-    console.log("Translated input: " + data.message);
-    }).catch(err => {
-    console.error(err);
-    }); 
+
