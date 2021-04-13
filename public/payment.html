@@ -15,17 +15,18 @@
     <main class="flex-container">
         <div class="form-list">
             <form class="forms" id="signup_form" action="../api/user/create.php" method="POST">
-                <h1>Paypal Payment</h1>
-                
+                <h1>Appointment</h1>
                 <div style="text-align: center;">
-                    <input class="buttons" type="submit" value="Create"> 
-                    <script src="https://www.paypal.com/sdk/js?client-id=test"></script>
-                    <script>paypal.Buttons().render('body');</script> 
+                    <!-- <input class="buttons" type="submit" value="Create">  -->
+                    <div id="paypal-button">
+                        <script src="https://www.paypal.com/sdk/js?client-id=AfpLcN9dPZfkOppFCIFCrNkAdy0RorBP7Xby63FR3TJmwFGbL78wOLhJ9QPZUydqxmalXP2kk-_x-2Sx"></script>
+                        <script src="paypal.js"></script>
+                    </div>
                 </div>        
                 
-                <div style="text-align: center; font-size: 15px;">
+                <!-- <div style="text-align: center; font-size: 15px;">
                     <p>Already a Member? Login <a href="./login.html">here</a></p>
-                </div>
+                </div> -->
             </form>           
         </div>
     </main>
