@@ -15,6 +15,10 @@ paypal.Buttons({
     onApprove: function(data, actions) {
         return actions.order.capture().then(function(details) {
             console.log(details)
+            window.location.replace("paymentSuccess.html")
         })
+    },
+    onCancel: function(data) {
+        window.location.replace("paymentFail.html")
     }
 }).render('#paypal-button');
