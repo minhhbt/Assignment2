@@ -940,6 +940,17 @@
       "answers": [
         "Would you like some wine recommendations?"
       ]
+    },
+    {
+      "intent": "user.appointment",
+      "utterances": [
+        "Can I schedule an appointment?",
+        "Can I talk to someone?",
+        "How should I contact you?"
+      ],
+      "answers": [
+        "We are available for Zoom call appointments from Monday to Friday, 9am to 6pm Eastern Time.<br><br>You can follow the link below to set up and pay for the appointments.<br><br><a href='payment.html'>Payment link</a> "
+      ]
     }
   ]
 }
