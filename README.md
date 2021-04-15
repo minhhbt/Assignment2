@@ -1,8 +1,4 @@
 # Psychiatrist Chatbot as a Client-Server Service
-
-## Note
-The individual project portion can be found on the Bot-App branch, where a README with more details on the features and APIs are located.
-
 Meet **Dr. Hannibal Lecter**, the online Psychiatrist Bot.
 The bot is loosely based on the titular main antagonist of the Hannibal book series by Thomas Harris and their film and television series adaptions.
 Hannibal is an extremely brilliant psychiatrist, but also a mentally disturbed and cannibalistic serial killer infamous for eating his victims.
