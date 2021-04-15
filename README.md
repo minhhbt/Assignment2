@@ -33,7 +33,7 @@ Hannibal is an extremely brilliant psychiatrist, but also a mentally disturbed a
 - **unirest** & **Spoonacular** API - accessing the database of Recipes & Wine recommendations
 
 ## Libraries and APIs (Individual)
-- **Google Translate** api - recognizes the user's input and translates it to English or French. The API method translates the user's input to English by default before it is being processed in the backend. Then, all server replies are translated to the supported language before it is being appended to the html chatbox.
+- **Google Translate** api - The API method allows detection of the user's input and translates them to English by default before it is being passed in the backend. Then, all server replies are translated to the supported language before it is being appended to the html chatbox.
 
 - **Paypal** api - When triggers that are related to "appointments, contacts, schedule" are entered, the server reply will contain a link to the payment page for appointments. The user will have to enter their full name and choose a suitable time. Then, they can complete the payment via Paypal's page using a sandbox account. If the payment fails to complete, the user will be linked to an error page that alows them to redo the payment process.
 
