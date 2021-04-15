@@ -27,9 +27,13 @@ Hannibal is an extremely brilliant psychiatrist, but also a mentally disturbed a
 - npm install -g jest
 - npm test 
 
-## Libraries and APIs used
+## Libraries and APIs (A3)
 - **NLP.js** api - understanding synonyms, getting the message intent
 - **ner-promise** api & **Stanford NER** library - Named Entity Recognition
 - **vader-sentiment package** - sentiment analysis
 - **unirest** & **Spoonacular** API - accessing the database of Recipes & Wine recommendations
+
+## Libraries and APIs (Individual)
+- **Google Translate** api - understanding synonyms, getting the message intent.
+- **Paypal** api - Allow users to choose a time and pay for appointments.
 
