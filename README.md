@@ -1,3 +1,6 @@
+## Note
+The individual project portion can be found on the Bot-App branch, where a README with more details on the features and APIs are located.
+
 # Psychiatrist Chatbot
 ## Overview
 - The code employs the **Discord.js** library in order to connect to a bot channel created by the members for this purpose. </br>
