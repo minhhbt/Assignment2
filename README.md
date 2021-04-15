@@ -33,6 +33,7 @@ Hannibal is an extremely brilliant psychiatrist, but also a mentally disturbed a
 - **unirest** & **Spoonacular** API - accessing the database of Recipes & Wine recommendations
 
 ## Libraries and APIs (Individual)
-- **Google Translate** api - understanding synonyms, getting the message intent.
+- **Google Translate** api - recognize the user's input and translates it to English or French.
+> Line 2
 - **Paypal** api - Allow users to choose a time and pay for appointments.
 
