@@ -15,7 +15,18 @@
     <main class="flex-container">
         <div class="form-list">
             <form class="forms" id="signup_form" action="../api/user/create.php" method="POST">
-                <h1>Appointment</h1>
+                <h1 id="payment-title">Appointment</h1>
+                <div class="input-fields">
+                    <input type="text" id="fullname" name="fullname" placeholder="full name"><br>
+                </div>
+
+                <div class="input-fields">
+                    <input type="text" id="email" name="email" placeholder="email"><br>
+                </div>
+
+                <div class="input-fields">
+                    <input type="datetime-local" id="calendar" name="calendar" placeholder="Choose a time"><br>
+                </div>
                 <div style="text-align: center;">
                     <!-- <input class="buttons" type="submit" value="Create">  -->
                     <div id="paypal-button">

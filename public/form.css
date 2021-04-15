@@ -87,3 +87,13 @@ a:visited {
 #paypal-button {
 	margin-top: 24px;
 }
+
+#payment-title {
+	margin-bottom: 16px;
+}
+
+#calendar {
+	font-family: Poppins;
+	font-size: 16px;
+	color: gray;
+}
